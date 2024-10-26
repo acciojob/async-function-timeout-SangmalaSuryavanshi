@@ -1,18 +1,27 @@
 //your JS code here. If required.
-document.getElementById('form').addEventListener('submit', async (event) => {
-    event.preventDefault(); // Prevent the form from submitting normally
+document.getElementById("btn").addEventListener("click", async function () {
+  const textInput = document.getElementById("text").value;
+  const delayInput = document.getElementById("delay").value;
+  const outputDiv = document.getElementById("output");
 
-    const text = document.getElementById('text').value; // Get the user-provided text
-    const delay = parseInt(document.getElementById('delay').value, 10); // Get the delay and convert to integer
+  // Convert the delay to milliseconds (assuming input is in milliseconds)
+  const delay = parseInt(delayInput, 10);
 
-    // Call the async function to display the text after the delay
-    await displayTextAfterDelay(text, delay);
+  // Reset the output div
+  outputDiv.textContent = "";
+
+  // Async function to wait for the specified delay
+  const waitForDelay = (ms) => {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
+  };
+
+  // Await the delay and then display the text
+  if (textInput && delay) {
+    await waitForDelay(delay);
+    outputDiv.textContent = textInput;
+  } else {
+    outputDiv.textContent = "Please enter valid text and delay.";
+  }
 });
-
-async function displayTextAfterDelay(text, delay) {
-    // Introduce a delay using a Promise
-    await new Promise(resolve => setTimeout(resolve, delay));
-
-    // Display the text in the output div
-    document.getElementById('output').textContent = text;
-}
